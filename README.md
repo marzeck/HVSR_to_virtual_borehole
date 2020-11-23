@@ -44,3 +44,4 @@ To run the steps above, you need:
 - Pandas
 - MatPlotLib
 - csv
+- yaml
