@@ -15,7 +15,7 @@
 # Command line:
 #   /home/martin/.local/bin/generateDS -o "siteXML.py" -s "siteXMLsubs.py" /home/martin/Documents/ROB/Station-analyses/scripts/site-characterization-scheme/schema/QuakeML-SERA-1.2.xsd
 #
-# Current working directory (os.getcwd()):
+# Current working directory (os.getcwd()):siteCharacterizationParameter
 #   HVSR_to_virtual_borehole
 #
 
@@ -44,6 +44,10 @@ if sys.version_info.major == 2:
 else:
     BaseStrType_ = str
 
+try:
+    unicode
+except NameError:
+    unicode = str
 
 def parsexml_(infile, parser=None, **kwargs):
     if parser is None:
@@ -1202,17 +1206,17 @@ class SERA_quakeml(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'siteOwner':
-            obj_ = siteOwnerType.factory(parent_object_=self)
+            obj_ = siteOwner.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteOwner = obj_
             obj_.original_tagname_ = 'siteOwner'
         elif nodeName_ == 'siteCharacterizationParameters':
-            obj_ = siteCharacterizationParametersType.factory(parent_object_=self)
+            obj_ = siteCharacterizationParameters.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteCharacterizationParameters = obj_
             obj_.original_tagname_ = 'siteCharacterizationParameters'
         elif nodeName_ == 'siteDescription':
-            obj_ = siteDescriptionType.factory(parent_object_=self)
+            obj_ = siteDescription.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteDescription = obj_
             obj_.original_tagname_ = 'siteDescription'
@@ -1221,7 +1225,7 @@ class SERA_quakeml(GeneratedsSuper):
 # end class SERA_quakeml
 
 
-class siteOwnerType(GeneratedsSuper):
+class siteOwner(GeneratedsSuper):
     """siteOwner is not defined in QuakeML 2.0 draft"""
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
@@ -1245,13 +1249,13 @@ class siteOwnerType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteOwnerType)
+                CurrentSubclassModule_, siteOwner)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteOwnerType.subclass:
-            return siteOwnerType.subclass(*args_, **kwargs_)
+        if siteOwner.subclass:
+            return siteOwner.subclass(*args_, **kwargs_)
         else:
-            return siteOwnerType(*args_, **kwargs_)
+            return siteOwner(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -1296,40 +1300,40 @@ class siteOwnerType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteOwnerType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteOwner',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteOwnerType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteOwner')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteOwnerType':
+        if self.original_tagname_ is not None and name_ == 'siteOwner':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteOwnerType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteOwner')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteOwnerType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteOwner',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteOwnerType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteOwner'):
         if self.publicID is not None and 'publicID' not in already_processed:
             already_processed.add('publicID')
             outfile.write(' publicID=%s' % (
                 self.gds_encode(self.gds_format_string(quote_attrib(self.publicID), input_name='publicID')),))
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteOwnerType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteOwner',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -1386,16 +1390,16 @@ class siteOwnerType(GeneratedsSuper):
             self.fullName = value_
             self.fullName_nsprefix_ = child_.prefix
         elif nodeName_ == 'contact':
-            obj_ = contactType.factory(parent_object_=self)
+            obj_ = contact.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.contact = obj_
             obj_.original_tagname_ = 'contact'
 
 
-# end class siteOwnerType
+# end class siteOwner
 
 
-class contactType(GeneratedsSuper):
+class contact(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -1414,13 +1418,13 @@ class contactType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, contactType)
+                CurrentSubclassModule_, contact)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if contactType.subclass:
-            return contactType.subclass(*args_, **kwargs_)
+        if contact.subclass:
+            return contact.subclass(*args_, **kwargs_)
         else:
-            return contactType(*args_, **kwargs_)
+            return contact(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -1452,37 +1456,37 @@ class contactType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='contactType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='contact',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('contactType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('contact')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'contactType':
+        if self.original_tagname_ is not None and name_ == 'contact':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='contactType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='contact')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='contactType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='contact',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='contactType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='contact'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='contactType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='contact',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -1515,21 +1519,21 @@ class contactType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'person':
-            obj_ = personType.factory(parent_object_=self)
+            obj_ = person.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.person = obj_
             obj_.original_tagname_ = 'person'
         elif nodeName_ == 'affiliation':
-            obj_ = affiliationType.factory(parent_object_=self)
+            obj_ = affiliation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.affiliation = obj_
             obj_.original_tagname_ = 'affiliation'
 
 
-# end class contactType
+# end class contact
 
 
-class personType(GeneratedsSuper):
+class person(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -1555,13 +1559,13 @@ class personType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, personType)
+                CurrentSubclassModule_, person)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if personType.subclass:
-            return personType.subclass(*args_, **kwargs_)
+        if person.subclass:
+            return person.subclass(*args_, **kwargs_)
         else:
-            return personType(*args_, **kwargs_)
+            return person(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -1613,40 +1617,40 @@ class personType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='personType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='person',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('personType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('person')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'personType':
+        if self.original_tagname_ is not None and name_ == 'person':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='personType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='person')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='personType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='person',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='personType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='person'):
         if self.personID is not None and 'personID' not in already_processed:
             already_processed.add('personID')
             outfile.write(' personID=%s' % (
                 self.gds_encode(self.gds_format_string(quote_attrib(self.personID), input_name='personID')),))
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='personType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='person',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -1723,10 +1727,10 @@ class personType(GeneratedsSuper):
             self.homepage_nsprefix_ = child_.prefix
 
 
-# end class personType
+# end class person
 
 
-class affiliationType(GeneratedsSuper):
+class affiliation(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -1747,13 +1751,13 @@ class affiliationType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, affiliationType)
+                CurrentSubclassModule_, affiliation)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if affiliationType.subclass:
-            return affiliationType.subclass(*args_, **kwargs_)
+        if affiliation.subclass:
+            return affiliation.subclass(*args_, **kwargs_)
         else:
-            return affiliationType(*args_, **kwargs_)
+            return affiliation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -1792,37 +1796,37 @@ class affiliationType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='affiliationType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='affiliation',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('affiliationType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('affiliation')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'affiliationType':
+        if self.original_tagname_ is not None and name_ == 'affiliation':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='affiliationType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='affiliation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='affiliationType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='affiliation',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='affiliationType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='affiliation'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='affiliationType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='affiliation',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -1863,7 +1867,7 @@ class affiliationType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'institution':
-            obj_ = institutionType.factory(parent_object_=self)
+            obj_ = institution.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.institution = obj_
             obj_.original_tagname_ = 'institution'
@@ -1881,10 +1885,10 @@ class affiliationType(GeneratedsSuper):
             self.function_nsprefix_ = child_.prefix
 
 
-# end class affiliationType
+# end class affiliation
 
 
-class institutionType(GeneratedsSuper):
+class institution(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -1912,13 +1916,13 @@ class institutionType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, institutionType)
+                CurrentSubclassModule_, institution)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if institutionType.subclass:
-            return institutionType.subclass(*args_, **kwargs_)
+        if institution.subclass:
+            return institution.subclass(*args_, **kwargs_)
         else:
-            return institutionType(*args_, **kwargs_)
+            return institution(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -1978,37 +1982,37 @@ class institutionType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='institutionType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='institution',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('institutionType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('institution')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'institutionType':
+        if self.original_tagname_ is not None and name_ == 'institution':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='institutionType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='institution')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='institutionType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='institution',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='institutionType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='institution'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='institutionType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='institution',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -2066,7 +2070,7 @@ class institutionType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'identifier':
-            obj_ = identifierType.factory(parent_object_=self)
+            obj_ = identifier.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.identifier = obj_
             obj_.original_tagname_ = 'identifier'
@@ -2095,16 +2099,16 @@ class institutionType(GeneratedsSuper):
             self.homepage = value_
             self.homepage_nsprefix_ = child_.prefix
         elif nodeName_ == 'postalAddress':
-            obj_ = postalAddressType.factory(parent_object_=self)
+            obj_ = postalAddress.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.postalAddress = obj_
             obj_.original_tagname_ = 'postalAddress'
 
 
-# end class institutionType
+# end class institution
 
 
-class identifierType(GeneratedsSuper):
+class identifier(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -2121,13 +2125,13 @@ class identifierType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, identifierType)
+                CurrentSubclassModule_, identifier)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if identifierType.subclass:
-            return identifierType.subclass(*args_, **kwargs_)
+        if identifier.subclass:
+            return identifier.subclass(*args_, **kwargs_)
         else:
-            return identifierType(*args_, **kwargs_)
+            return identifier(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -2152,37 +2156,37 @@ class identifierType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='identifierType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='identifier',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('identifierType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('identifier')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'identifierType':
+        if self.original_tagname_ is not None and name_ == 'identifier':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='identifierType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='identifier')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='identifierType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='identifier',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='identifierType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='identifier'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='identifierType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='identifier',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -2218,10 +2222,10 @@ class identifierType(GeneratedsSuper):
             self.resourceID_nsprefix_ = child_.prefix
 
 
-# end class identifierType
+# end class identifier
 
 
-class postalAddressType(GeneratedsSuper):
+class postalAddress(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -2245,13 +2249,13 @@ class postalAddressType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, postalAddressType)
+                CurrentSubclassModule_, postalAddress)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if postalAddressType.subclass:
-            return postalAddressType.subclass(*args_, **kwargs_)
+        if postalAddress.subclass:
+            return postalAddress.subclass(*args_, **kwargs_)
         else:
-            return postalAddressType(*args_, **kwargs_)
+            return postalAddress(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -2297,38 +2301,38 @@ class postalAddressType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='postalAddressType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='postalAddress',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('postalAddressType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('postalAddress')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'postalAddressType':
+        if self.original_tagname_ is not None and name_ == 'postalAddress':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='postalAddressType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='postalAddress')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='postalAddressType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='postalAddress',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='postalAddressType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='postalAddress'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='postalAddressType', fromsubclass_=False, pretty_print=True):
+                       name_='postalAddress', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -2392,16 +2396,16 @@ class postalAddressType(GeneratedsSuper):
             self.postalCode = value_
             self.postalCode_nsprefix_ = child_.prefix
         elif nodeName_ == 'country':
-            obj_ = countryType.factory(parent_object_=self)
+            obj_ = country.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.country = obj_
             obj_.original_tagname_ = 'country'
 
 
-# end class postalAddressType
+# end class postalAddress
 
 
-class countryType(GeneratedsSuper):
+class country(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -2420,13 +2424,13 @@ class countryType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, countryType)
+                CurrentSubclassModule_, country)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if countryType.subclass:
-            return countryType.subclass(*args_, **kwargs_)
+        if country.subclass:
+            return country.subclass(*args_, **kwargs_)
         else:
-            return countryType(*args_, **kwargs_)
+            return country(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -2458,37 +2462,37 @@ class countryType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='countryType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='country',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('countryType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('country')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'countryType':
+        if self.original_tagname_ is not None and name_ == 'country':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='countryType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='country')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='countryType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='country',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='countryType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='country'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='countryType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='country',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -2538,10 +2542,10 @@ class countryType(GeneratedsSuper):
             self.country_nsprefix_ = child_.prefix
 
 
-# end class countryType
+# end class country
 
 
-class siteCharacterizationParametersType(GeneratedsSuper):
+class siteCharacterizationParameters(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -2570,13 +2574,13 @@ class siteCharacterizationParametersType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteCharacterizationParametersType)
+                CurrentSubclassModule_, siteCharacterizationParameters)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteCharacterizationParametersType.subclass:
-            return siteCharacterizationParametersType.subclass(*args_, **kwargs_)
+        if siteCharacterizationParameters.subclass:
+            return siteCharacterizationParameters.subclass(*args_, **kwargs_)
         else:
-            return siteCharacterizationParametersType(*args_, **kwargs_)
+            return siteCharacterizationParameters(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -2638,15 +2642,15 @@ class siteCharacterizationParametersType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='siteCharacterizationParametersType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteCharacterizationParametersType')
+               name_='siteCharacterizationParameters', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteCharacterizationParameters')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteCharacterizationParametersType':
+        if self.original_tagname_ is not None and name_ == 'siteCharacterizationParameters':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2654,18 +2658,18 @@ class siteCharacterizationParametersType(GeneratedsSuper):
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
         self.exportAttributes(outfile, level, already_processed, namespaceprefix_,
-                              name_='siteCharacterizationParametersType')
+                              name_='siteCharacterizationParameters')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
             self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_,
-                                name_='siteCharacterizationParametersType', pretty_print=pretty_print)
+                                name_='siteCharacterizationParameters', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='siteCharacterizationParametersType'):
+                         name_='siteCharacterizationParameters'):
         if self.publicID is not None and 'publicID' not in already_processed:
             already_processed.add('publicID')
             outfile.write(' publicID=%s' % (
@@ -2673,7 +2677,7 @@ class siteCharacterizationParametersType(GeneratedsSuper):
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteCharacterizationParametersType', fromsubclass_=False, pretty_print=True):
+                       name_='siteCharacterizationParameters', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -2718,31 +2722,31 @@ class siteCharacterizationParametersType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'Analysis':
-            obj_ = AnalysisType.factory(parent_object_=self)
+            obj_ = Analysis.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.Analysis = obj_
             obj_.original_tagname_ = 'Analysis'
         elif nodeName_ == 'VelocityProfile':
-            obj_ = VelocityProfileType.factory(parent_object_=self)
+            obj_ = VelocityProfile.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.VelocityProfile.append(obj_)
             obj_.original_tagname_ = 'VelocityProfile'
         elif nodeName_ == 'velocityProfileQindex1':
-            obj_ = velocityProfileQindex1Type.factory(parent_object_=self)
+            obj_ = velocityProfileQindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.velocityProfileQindex1 = obj_
             obj_.original_tagname_ = 'velocityProfileQindex1'
         elif nodeName_ == 'velocityProfileReference':
-            obj_ = velocityProfileReferenceType.factory(parent_object_=self)
+            obj_ = velocityProfileReference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.velocityProfileReference = obj_
             obj_.original_tagname_ = 'velocityProfileReference'
 
 
-# end class siteCharacterizationParametersType
+# end class siteCharacterizationParameters
 
 
-class AnalysisType(GeneratedsSuper):
+class Analysis(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -2808,13 +2812,13 @@ class AnalysisType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, AnalysisType)
+                CurrentSubclassModule_, Analysis)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if AnalysisType.subclass:
-            return AnalysisType.subclass(*args_, **kwargs_)
+        if Analysis.subclass:
+            return Analysis.subclass(*args_, **kwargs_)
         else:
-            return AnalysisType(*args_, **kwargs_)
+            return Analysis(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -2962,40 +2966,40 @@ class AnalysisType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='AnalysisType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='Analysis',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('AnalysisType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('Analysis')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'AnalysisType':
+        if self.original_tagname_ is not None and name_ == 'Analysis':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='AnalysisType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Analysis')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='AnalysisType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='Analysis',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='AnalysisType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Analysis'):
         if self.publicID is not None and 'publicID' not in already_processed:
             already_processed.add('publicID')
             outfile.write(' publicID=%s' % (
                 self.gds_encode(self.gds_format_string(quote_attrib(self.publicID), input_name='publicID')),))
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='AnalysisType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='Analysis',
                        fromsubclass_=False, pretty_print=True):
         if not fromsubclass_:
             for item_ in self.content_:
@@ -3121,7 +3125,7 @@ class AnalysisType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'resonanceFrequency':
-            obj_ = resonanceFrequencyType.factory(parent_object_=self)
+            obj_ = resonanceFrequency.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'resonanceFrequency', obj_)
@@ -3131,7 +3135,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_resonanceFrequency'):
                 self.set_resonanceFrequency(obj_.value)
         elif nodeName_ == 'resonanceFrequencyQindex1':
-            obj_ = resonanceFrequencyQindex1Type.factory(parent_object_=self)
+            obj_ = resonanceFrequencyQindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'resonanceFrequencyQindex1', obj_)
@@ -3149,7 +3153,7 @@ class AnalysisType(GeneratedsSuper):
             self.content_.append(obj_)
             self.resonanceFrequencyMethod_nsprefix_ = child_.prefix
         elif nodeName_ == 'resonanceFrequencyReference':
-            obj_ = resonanceFrequencyReferenceType.factory(parent_object_=self)
+            obj_ = resonanceFrequencyReference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'resonanceFrequencyReference', obj_)
@@ -3159,7 +3163,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_resonanceFrequencyReference'):
                 self.set_resonanceFrequencyReference(obj_.value)
         elif nodeName_ == 'velocityS30':
-            obj_ = velocityS30Type.factory(parent_object_=self)
+            obj_ = velocityS30.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'velocityS30', obj_)
@@ -3169,7 +3173,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_velocityS30'):
                 self.set_velocityS30(obj_.value)
         elif nodeName_ == 'velocityS30Qindex1':
-            obj_ = velocityS30Qindex1Type.factory(parent_object_=self)
+            obj_ = velocityS30Qindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'velocityS30Qindex1', obj_)
@@ -3203,7 +3207,7 @@ class AnalysisType(GeneratedsSuper):
             self.content_.append(obj_)
             self.velocityS30ManualIndex_nsprefix_ = child_.prefix
         elif nodeName_ == 'velocityS30Reference':
-            obj_ = velocityS30ReferenceType.factory(parent_object_=self)
+            obj_ = velocityS30Reference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'velocityS30Reference', obj_)
@@ -3213,7 +3217,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_velocityS30Reference'):
                 self.set_velocityS30Reference(obj_.value)
         elif nodeName_ == 'velocityProfileCount':
-            obj_ = velocityProfileCountType.factory(parent_object_=self)
+            obj_ = velocityProfileCount.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'velocityProfileCount', obj_)
@@ -3223,7 +3227,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_velocityProfileCount'):
                 self.set_velocityProfileCount(obj_.value)
         elif nodeName_ == 'sptLogsCount':
-            obj_ = sptLogsCountType.factory(parent_object_=self)
+            obj_ = sptLogsCount.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'sptLogsCount', obj_)
@@ -3233,7 +3237,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_sptLogsCount'):
                 self.set_sptLogsCount(obj_.value)
         elif nodeName_ == 'cptLogsCount':
-            obj_ = cptLogsCountType.factory(parent_object_=self)
+            obj_ = cptLogsCount.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'cptLogsCount', obj_)
@@ -3243,7 +3247,7 @@ class AnalysisType(GeneratedsSuper):
             elif hasattr(self, 'set_cptLogsCount'):
                 self.set_cptLogsCount(obj_.value)
         elif nodeName_ == 'boreholeLogsCount':
-            obj_ = boreholeLogsCountType.factory(parent_object_=self)
+            obj_ = boreholeLogsCount.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             obj_ = self.mixedclass_(MixedContainer.CategoryComplex,
                                     MixedContainer.TypeNone, 'boreholeLogsCount', obj_)
@@ -3258,10 +3262,10 @@ class AnalysisType(GeneratedsSuper):
             self.content_.append(obj_)
 
 
-# end class AnalysisType
+# end class Analysis
 
 
-class resonanceFrequencyType(GeneratedsSuper):
+class resonanceFrequency(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -3280,13 +3284,13 @@ class resonanceFrequencyType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, resonanceFrequencyType)
+                CurrentSubclassModule_, resonanceFrequency)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if resonanceFrequencyType.subclass:
-            return resonanceFrequencyType.subclass(*args_, **kwargs_)
+        if resonanceFrequency.subclass:
+            return resonanceFrequency.subclass(*args_, **kwargs_)
         else:
-            return resonanceFrequencyType(*args_, **kwargs_)
+            return resonanceFrequency(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -3318,38 +3322,38 @@ class resonanceFrequencyType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='resonanceFrequencyType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='resonanceFrequency',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequencyType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequency')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'resonanceFrequencyType':
+        if self.original_tagname_ is not None and name_ == 'resonanceFrequency':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='resonanceFrequencyType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='resonanceFrequency')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='resonanceFrequencyType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='resonanceFrequency',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='resonanceFrequencyType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='resonanceFrequency'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='resonanceFrequencyType', fromsubclass_=False, pretty_print=True):
+                       name_='resonanceFrequency', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -3397,10 +3401,10 @@ class resonanceFrequencyType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class resonanceFrequencyType
+# end class resonanceFrequency
 
 
-class resonanceFrequencyQindex1Type(GeneratedsSuper):
+class resonanceFrequencyQindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -3417,13 +3421,13 @@ class resonanceFrequencyQindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, resonanceFrequencyQindex1Type)
+                CurrentSubclassModule_, resonanceFrequencyQindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if resonanceFrequencyQindex1Type.subclass:
-            return resonanceFrequencyQindex1Type.subclass(*args_, **kwargs_)
+        if resonanceFrequencyQindex1.subclass:
+            return resonanceFrequencyQindex1.subclass(*args_, **kwargs_)
         else:
-            return resonanceFrequencyQindex1Type(*args_, **kwargs_)
+            return resonanceFrequencyQindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -3449,15 +3453,15 @@ class resonanceFrequencyQindex1Type(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='resonanceFrequencyQindex1Type', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequencyQindex1Type')
+               name_='resonanceFrequencyQindex1', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequencyQindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'resonanceFrequencyQindex1Type':
+        if self.original_tagname_ is not None and name_ == 'resonanceFrequencyQindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3465,23 +3469,23 @@ class resonanceFrequencyQindex1Type(GeneratedsSuper):
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
         self.exportAttributes(outfile, level, already_processed, namespaceprefix_,
-                              name_='resonanceFrequencyQindex1Type')
+                              name_='resonanceFrequencyQindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
             self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_,
-                                name_='resonanceFrequencyQindex1Type', pretty_print=pretty_print)
+                                name_='resonanceFrequencyQindex1', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='resonanceFrequencyQindex1Type'):
+                         name_='resonanceFrequencyQindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='resonanceFrequencyQindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='resonanceFrequencyQindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -3516,10 +3520,10 @@ class resonanceFrequencyQindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class resonanceFrequencyQindex1Type
+# end class resonanceFrequencyQindex1
 
 
-class resonanceFrequencyReferenceType(GeneratedsSuper):
+class resonanceFrequencyReference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -3538,13 +3542,13 @@ class resonanceFrequencyReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, resonanceFrequencyReferenceType)
+                CurrentSubclassModule_, resonanceFrequencyReference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if resonanceFrequencyReferenceType.subclass:
-            return resonanceFrequencyReferenceType.subclass(*args_, **kwargs_)
+        if resonanceFrequencyReference.subclass:
+            return resonanceFrequencyReference.subclass(*args_, **kwargs_)
         else:
-            return resonanceFrequencyReferenceType(*args_, **kwargs_)
+            return resonanceFrequencyReference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -3577,15 +3581,15 @@ class resonanceFrequencyReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='resonanceFrequencyReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequencyReferenceType')
+               name_='resonanceFrequencyReference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('resonanceFrequencyReference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'resonanceFrequencyReferenceType':
+        if self.original_tagname_ is not None and name_ == 'resonanceFrequencyReference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3593,23 +3597,23 @@ class resonanceFrequencyReferenceType(GeneratedsSuper):
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
         self.exportAttributes(outfile, level, already_processed, namespaceprefix_,
-                              name_='resonanceFrequencyReferenceType')
+                              name_='resonanceFrequencyReference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
             self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_,
-                                name_='resonanceFrequencyReferenceType', pretty_print=pretty_print)
+                                name_='resonanceFrequencyReference', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='resonanceFrequencyReferenceType'):
+                         name_='resonanceFrequencyReference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='resonanceFrequencyReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='resonanceFrequencyReference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -3642,21 +3646,21 @@ class resonanceFrequencyReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class resonanceFrequencyReferenceType
+# end class resonanceFrequencyReference
 
 
-class literatureSourceType(GeneratedsSuper):
+class literatureSource(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -3689,13 +3693,13 @@ class literatureSourceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType)
+                CurrentSubclassModule_, literatureSource)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if literatureSourceType.subclass:
-            return literatureSourceType.subclass(*args_, **kwargs_)
+        if literatureSource.subclass:
+            return literatureSource.subclass(*args_, **kwargs_)
         else:
-            return literatureSourceType(*args_, **kwargs_)
+            return literatureSource(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -3771,38 +3775,38 @@ class literatureSourceType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSource',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSource')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType':
+        if self.original_tagname_ is not None and name_ == 'literatureSource':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSource')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSource',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSource'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType', fromsubclass_=False, pretty_print=True):
+                       name_='literatureSource', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -3894,7 +3898,7 @@ class literatureSourceType(GeneratedsSuper):
             self.booktitle = value_
             self.booktitle_nsprefix_ = child_.prefix
         elif nodeName_ == 'language':
-            obj_ = languageType.factory(parent_object_=self)
+            obj_ = language.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.language = obj_
             obj_.original_tagname_ = 'language'
@@ -3906,10 +3910,10 @@ class literatureSourceType(GeneratedsSuper):
             self.DOI_nsprefix_ = child_.prefix
 
 
-# end class literatureSourceType
+# end class literatureSource
 
 
-class languageType(GeneratedsSuper):
+class language(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -3926,13 +3930,13 @@ class languageType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType)
+                CurrentSubclassModule_, language)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if languageType.subclass:
-            return languageType.subclass(*args_, **kwargs_)
+        if language.subclass:
+            return language.subclass(*args_, **kwargs_)
         else:
-            return languageType(*args_, **kwargs_)
+            return language(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -3957,37 +3961,37 @@ class languageType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='language',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('language')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType':
+        if self.original_tagname_ is not None and name_ == 'language':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='language')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='language',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='language'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='language',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -4024,10 +4028,10 @@ class languageType(GeneratedsSuper):
             self.code_nsprefix_ = child_.prefix
 
 
-# end class languageType
+# end class language
 
 
-class FileResourceType(GeneratedsSuper):
+class FileResource(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -4049,13 +4053,13 @@ class FileResourceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType)
+                CurrentSubclassModule_, FileResource)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if FileResourceType.subclass:
-            return FileResourceType.subclass(*args_, **kwargs_)
+        if FileResource.subclass:
+            return FileResource.subclass(*args_, **kwargs_)
         else:
-            return FileResourceType(*args_, **kwargs_)
+            return FileResource(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -4096,38 +4100,38 @@ class FileResourceType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResource',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResource')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType':
+        if self.original_tagname_ is not None and name_ == 'FileResource':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResource')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResource',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResource'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType', fromsubclass_=False, pretty_print=True):
+                       name_='FileResource', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -4175,10 +4179,10 @@ class FileResourceType(GeneratedsSuper):
             self.url_nsprefix_ = child_.prefix
 
 
-# end class FileResourceType
+# end class FileResource
 
 
-class velocityS30Type(GeneratedsSuper):
+class velocityS30(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -4197,13 +4201,13 @@ class velocityS30Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityS30Type)
+                CurrentSubclassModule_, velocityS30)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityS30Type.subclass:
-            return velocityS30Type.subclass(*args_, **kwargs_)
+        if velocityS30.subclass:
+            return velocityS30.subclass(*args_, **kwargs_)
         else:
-            return velocityS30Type(*args_, **kwargs_)
+            return velocityS30(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -4235,37 +4239,37 @@ class velocityS30Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityS30Type':
+        if self.original_tagname_ is not None and name_ == 'velocityS30':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityS30Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityS30'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30Type',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -4314,10 +4318,10 @@ class velocityS30Type(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class velocityS30Type
+# end class velocityS30
 
 
-class velocityS30Qindex1Type(GeneratedsSuper):
+class velocityS30Qindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -4334,13 +4338,13 @@ class velocityS30Qindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityS30Qindex1Type)
+                CurrentSubclassModule_, velocityS30Qindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityS30Qindex1Type.subclass:
-            return velocityS30Qindex1Type.subclass(*args_, **kwargs_)
+        if velocityS30Qindex1.subclass:
+            return velocityS30Qindex1.subclass(*args_, **kwargs_)
         else:
-            return velocityS30Qindex1Type(*args_, **kwargs_)
+            return velocityS30Qindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -4365,38 +4369,38 @@ class velocityS30Qindex1Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30Qindex1Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS30Qindex1',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30Qindex1Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30Qindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityS30Qindex1Type':
+        if self.original_tagname_ is not None and name_ == 'velocityS30Qindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30Qindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30Qindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30Qindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30Qindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityS30Qindex1Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityS30Qindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityS30Qindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='velocityS30Qindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -4431,10 +4435,10 @@ class velocityS30Qindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class velocityS30Qindex1Type
+# end class velocityS30Qindex1
 
 
-class velocityS30ReferenceType(GeneratedsSuper):
+class velocityS30Reference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -4453,13 +4457,13 @@ class velocityS30ReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityS30ReferenceType)
+                CurrentSubclassModule_, velocityS30Reference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityS30ReferenceType.subclass:
-            return velocityS30ReferenceType.subclass(*args_, **kwargs_)
+        if velocityS30Reference.subclass:
+            return velocityS30Reference.subclass(*args_, **kwargs_)
         else:
-            return velocityS30ReferenceType(*args_, **kwargs_)
+            return velocityS30Reference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -4492,25 +4496,25 @@ class velocityS30ReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='velocityS30ReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30ReferenceType')
+               name_='velocityS30Reference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS30Reference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityS30ReferenceType':
+        if self.original_tagname_ is not None and name_ == 'velocityS30Reference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30ReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS30Reference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30ReferenceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS30Reference',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -4518,12 +4522,12 @@ class velocityS30ReferenceType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='velocityS30ReferenceType'):
+                         name_='velocityS30Reference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityS30ReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='velocityS30Reference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -4556,532 +4560,21 @@ class velocityS30ReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType1.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType3.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class velocityS30ReferenceType
+# end class velocityS30Reference
 
 
-class literatureSourceType1(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType1)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType1.subclass:
-            return literatureSourceType1.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType1(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType1',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType1')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType1':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType1')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType1',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType1'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType1', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType2.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType1
-
-
-class languageType2(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType2)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType2.subclass:
-            return languageType2.subclass(*args_, **kwargs_)
-        else:
-            return languageType2(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType2',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType2')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType2':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType2')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType2',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType2'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType2',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType2
-
-
-class FileResourceType3(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        if url is None:
-            self.url = []
-        else:
-            self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType3)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType3.subclass:
-            return FileResourceType3.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType3(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def add_url(self, value):
-        self.url.append(value)
-
-    def insert_url_at(self, index, value):
-        self.url.insert(index, value)
-
-    def replace_url_at(self, index, value):
-        self.url[index] = value
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType3',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType3')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType3':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType3')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType3',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType3'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType3', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        for url_ in self.url:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(url_), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url.append(value_)
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType3
-
-
-class velocityProfileCountType(GeneratedsSuper):
+class velocityProfileCount(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5098,13 +4591,13 @@ class velocityProfileCountType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityProfileCountType)
+                CurrentSubclassModule_, velocityProfileCount)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityProfileCountType.subclass:
-            return velocityProfileCountType.subclass(*args_, **kwargs_)
+        if velocityProfileCount.subclass:
+            return velocityProfileCount.subclass(*args_, **kwargs_)
         else:
-            return velocityProfileCountType(*args_, **kwargs_)
+            return velocityProfileCount(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5130,25 +4623,25 @@ class velocityProfileCountType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='velocityProfileCountType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileCountType')
+               name_='velocityProfileCount', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileCount')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityProfileCountType':
+        if self.original_tagname_ is not None and name_ == 'velocityProfileCount':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileCountType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileCount')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileCountType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileCount',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -5156,12 +4649,12 @@ class velocityProfileCountType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='velocityProfileCountType'):
+                         name_='velocityProfileCount'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityProfileCountType', fromsubclass_=False, pretty_print=True):
+                       name_='velocityProfileCount', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -5196,10 +4689,10 @@ class velocityProfileCountType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class velocityProfileCountType
+# end class velocityProfileCount
 
 
-class sptLogsCountType(GeneratedsSuper):
+class sptLogsCount(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5216,13 +4709,13 @@ class sptLogsCountType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, sptLogsCountType)
+                CurrentSubclassModule_, sptLogsCount)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if sptLogsCountType.subclass:
-            return sptLogsCountType.subclass(*args_, **kwargs_)
+        if sptLogsCount.subclass:
+            return sptLogsCount.subclass(*args_, **kwargs_)
         else:
-            return sptLogsCountType(*args_, **kwargs_)
+            return sptLogsCount(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5247,38 +4740,38 @@ class sptLogsCountType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='sptLogsCountType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='sptLogsCount',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('sptLogsCountType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('sptLogsCount')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'sptLogsCountType':
+        if self.original_tagname_ is not None and name_ == 'sptLogsCount':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='sptLogsCountType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='sptLogsCount')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='sptLogsCountType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='sptLogsCount',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='sptLogsCountType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='sptLogsCount'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='sptLogsCountType', fromsubclass_=False, pretty_print=True):
+                       name_='sptLogsCount', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -5313,10 +4806,10 @@ class sptLogsCountType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class sptLogsCountType
+# end class sptLogsCount
 
 
-class cptLogsCountType(GeneratedsSuper):
+class cptLogsCount(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5333,13 +4826,13 @@ class cptLogsCountType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, cptLogsCountType)
+                CurrentSubclassModule_, cptLogsCount)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if cptLogsCountType.subclass:
-            return cptLogsCountType.subclass(*args_, **kwargs_)
+        if cptLogsCount.subclass:
+            return cptLogsCount.subclass(*args_, **kwargs_)
         else:
-            return cptLogsCountType(*args_, **kwargs_)
+            return cptLogsCount(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5364,38 +4857,38 @@ class cptLogsCountType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='cptLogsCountType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='cptLogsCount',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('cptLogsCountType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('cptLogsCount')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'cptLogsCountType':
+        if self.original_tagname_ is not None and name_ == 'cptLogsCount':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='cptLogsCountType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='cptLogsCount')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='cptLogsCountType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='cptLogsCount',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='cptLogsCountType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='cptLogsCount'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='cptLogsCountType', fromsubclass_=False, pretty_print=True):
+                       name_='cptLogsCount', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -5430,10 +4923,10 @@ class cptLogsCountType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class cptLogsCountType
+# end class cptLogsCount
 
 
-class boreholeLogsCountType(GeneratedsSuper):
+class boreholeLogsCount(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5450,13 +4943,13 @@ class boreholeLogsCountType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, boreholeLogsCountType)
+                CurrentSubclassModule_, boreholeLogsCount)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if boreholeLogsCountType.subclass:
-            return boreholeLogsCountType.subclass(*args_, **kwargs_)
+        if boreholeLogsCount.subclass:
+            return boreholeLogsCount.subclass(*args_, **kwargs_)
         else:
-            return boreholeLogsCountType(*args_, **kwargs_)
+            return boreholeLogsCount(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5481,38 +4974,38 @@ class boreholeLogsCountType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='boreholeLogsCountType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='boreholeLogsCount',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('boreholeLogsCountType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('boreholeLogsCount')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'boreholeLogsCountType':
+        if self.original_tagname_ is not None and name_ == 'boreholeLogsCount':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='boreholeLogsCountType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='boreholeLogsCount')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='boreholeLogsCountType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='boreholeLogsCount',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='boreholeLogsCountType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='boreholeLogsCount'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='boreholeLogsCountType', fromsubclass_=False, pretty_print=True):
+                       name_='boreholeLogsCount', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -5547,10 +5040,10 @@ class boreholeLogsCountType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class boreholeLogsCountType
+# end class boreholeLogsCount
 
 
-class VelocityProfileType(GeneratedsSuper):
+class VelocityProfile(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5575,13 +5068,13 @@ class VelocityProfileType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, VelocityProfileType)
+                CurrentSubclassModule_, VelocityProfile)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if VelocityProfileType.subclass:
-            return VelocityProfileType.subclass(*args_, **kwargs_)
+        if VelocityProfile.subclass:
+            return VelocityProfile.subclass(*args_, **kwargs_)
         else:
-            return VelocityProfileType(*args_, **kwargs_)
+            return VelocityProfile(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5631,38 +5124,38 @@ class VelocityProfileType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='VelocityProfileType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='VelocityProfile',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('VelocityProfileType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('VelocityProfile')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'VelocityProfileType':
+        if self.original_tagname_ is not None and name_ == 'VelocityProfile':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='VelocityProfileType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='VelocityProfile')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='VelocityProfileType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='VelocityProfile',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='VelocityProfileType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='VelocityProfile'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='VelocityProfileType', fromsubclass_=False, pretty_print=True):
+                       name_='VelocityProfile', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -5694,21 +5187,21 @@ class VelocityProfileType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'layerCount':
-            obj_ = layerCountType.factory(parent_object_=self)
+            obj_ = layerCount.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.layerCount.append(obj_)
             obj_.original_tagname_ = 'layerCount'
         elif nodeName_ == 'velocityProfileData':
-            obj_ = velocityProfileDataType.factory(parent_object_=self)
+            obj_ = velocityProfileData.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.velocityProfileData.append(obj_)
             obj_.original_tagname_ = 'velocityProfileData'
 
 
-# end class VelocityProfileType
+# end class VelocityProfile
 
 
-class layerCountType(GeneratedsSuper):
+class layerCount(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5725,13 +5218,13 @@ class layerCountType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, layerCountType)
+                CurrentSubclassModule_, layerCount)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if layerCountType.subclass:
-            return layerCountType.subclass(*args_, **kwargs_)
+        if layerCount.subclass:
+            return layerCount.subclass(*args_, **kwargs_)
         else:
-            return layerCountType(*args_, **kwargs_)
+            return layerCount(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5756,37 +5249,37 @@ class layerCountType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerCountType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerCount',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerCountType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerCount')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'layerCountType':
+        if self.original_tagname_ is not None and name_ == 'layerCount':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerCountType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerCount')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerCountType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerCount',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerCountType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerCount'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerCountType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerCount',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -5822,10 +5315,10 @@ class layerCountType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class layerCountType
+# end class layerCount
 
 
-class velocityProfileDataType(GeneratedsSuper):
+class velocityProfileData(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -5861,13 +5354,13 @@ class velocityProfileDataType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityProfileDataType)
+                CurrentSubclassModule_, velocityProfileData)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityProfileDataType.subclass:
-            return velocityProfileDataType.subclass(*args_, **kwargs_)
+        if velocityProfileData.subclass:
+            return velocityProfileData.subclass(*args_, **kwargs_)
         else:
-            return velocityProfileDataType(*args_, **kwargs_)
+            return velocityProfileData(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -5949,38 +5442,38 @@ class velocityProfileDataType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityProfileDataType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityProfileData',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileDataType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileData')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityProfileDataType':
+        if self.original_tagname_ is not None and name_ == 'velocityProfileData':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileDataType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileData')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileDataType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileData',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityProfileDataType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityProfileData'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityProfileDataType', fromsubclass_=False, pretty_print=True):
+                       name_='velocityProfileData', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6020,31 +5513,31 @@ class velocityProfileDataType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'density':
-            obj_ = densityType.factory(parent_object_=self)
+            obj_ = density.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.density.append(obj_)
             obj_.original_tagname_ = 'density'
         elif nodeName_ == 'velocityP':
-            obj_ = velocityPType.factory(parent_object_=self)
+            obj_ = velocityP.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.velocityP.append(obj_)
             obj_.original_tagname_ = 'velocityP'
         elif nodeName_ == 'velocityS':
-            obj_ = velocitySType.factory(parent_object_=self)
+            obj_ = velocityS.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.velocityS.append(obj_)
             obj_.original_tagname_ = 'velocityS'
         elif nodeName_ == 'layerThickness':
-            obj_ = layerThicknessType.factory(parent_object_=self)
+            obj_ = layerThickness.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.layerThickness.append(obj_)
             obj_.original_tagname_ = 'layerThickness'
 
 
-# end class velocityProfileDataType
+# end class velocityProfileData
 
 
-class densityType(GeneratedsSuper):
+class density(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6063,13 +5556,13 @@ class densityType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, densityType)
+                CurrentSubclassModule_, density)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if densityType.subclass:
-            return densityType.subclass(*args_, **kwargs_)
+        if density.subclass:
+            return density.subclass(*args_, **kwargs_)
         else:
-            return densityType(*args_, **kwargs_)
+            return density(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6101,37 +5594,37 @@ class densityType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='densityType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='density',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('densityType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('density')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'densityType':
+        if self.original_tagname_ is not None and name_ == 'density':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='densityType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='density')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='densityType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='density',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='densityType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='density'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='densityType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='density',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -6180,10 +5673,10 @@ class densityType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class densityType
+# end class density
 
 
-class velocityPType(GeneratedsSuper):
+class velocityP(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6202,13 +5695,13 @@ class velocityPType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityPType)
+                CurrentSubclassModule_, velocityP)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityPType.subclass:
-            return velocityPType.subclass(*args_, **kwargs_)
+        if velocityP.subclass:
+            return velocityP.subclass(*args_, **kwargs_)
         else:
-            return velocityPType(*args_, **kwargs_)
+            return velocityP(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6240,37 +5733,37 @@ class velocityPType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityPType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityP',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityPType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityP')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityPType':
+        if self.original_tagname_ is not None and name_ == 'velocityP':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityPType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityP')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityPType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityP',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityPType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityP'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityPType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityP',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -6319,10 +5812,10 @@ class velocityPType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class velocityPType
+# end class velocityP
 
 
-class velocitySType(GeneratedsSuper):
+class velocityS(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6341,13 +5834,13 @@ class velocitySType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocitySType)
+                CurrentSubclassModule_, velocityS)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocitySType.subclass:
-            return velocitySType.subclass(*args_, **kwargs_)
+        if velocityS.subclass:
+            return velocityS.subclass(*args_, **kwargs_)
         else:
-            return velocitySType(*args_, **kwargs_)
+            return velocityS(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6379,37 +5872,37 @@ class velocitySType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocitySType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocitySType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityS')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocitySType':
+        if self.original_tagname_ is not None and name_ == 'velocityS':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocitySType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityS')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocitySType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityS',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocitySType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='velocityS'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocitySType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='velocityS',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -6458,10 +5951,10 @@ class velocitySType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class velocitySType
+# end class velocityS
 
 
-class layerThicknessType(GeneratedsSuper):
+class layerThickness(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6480,13 +5973,13 @@ class layerThicknessType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, layerThicknessType)
+                CurrentSubclassModule_, layerThickness)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if layerThicknessType.subclass:
-            return layerThicknessType.subclass(*args_, **kwargs_)
+        if layerThickness.subclass:
+            return layerThickness.subclass(*args_, **kwargs_)
         else:
-            return layerThicknessType(*args_, **kwargs_)
+            return layerThickness(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6518,38 +6011,38 @@ class layerThicknessType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerThicknessType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerThickness',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerThicknessType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerThickness')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'layerThicknessType':
+        if self.original_tagname_ is not None and name_ == 'layerThickness':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerThicknessType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerThickness')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerThicknessType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerThickness',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerThicknessType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerThickness'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='layerThicknessType', fromsubclass_=False, pretty_print=True):
+                       name_='layerThickness', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6582,21 +6075,21 @@ class layerThicknessType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'layerTopDepth':
-            obj_ = layerTopDepthType.factory(parent_object_=self)
+            obj_ = layerTopDepth.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.layerTopDepth = obj_
             obj_.original_tagname_ = 'layerTopDepth'
         elif nodeName_ == 'layerBottomDepth':
-            obj_ = layerBottomDepthType.factory(parent_object_=self)
+            obj_ = layerBottomDepth.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.layerBottomDepth = obj_
             obj_.original_tagname_ = 'layerBottomDepth'
 
 
-# end class layerThicknessType
+# end class layerThickness
 
 
-class layerTopDepthType(GeneratedsSuper):
+class layerTopDepth(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6615,13 +6108,13 @@ class layerTopDepthType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, layerTopDepthType)
+                CurrentSubclassModule_, layerTopDepth)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if layerTopDepthType.subclass:
-            return layerTopDepthType.subclass(*args_, **kwargs_)
+        if layerTopDepth.subclass:
+            return layerTopDepth.subclass(*args_, **kwargs_)
         else:
-            return layerTopDepthType(*args_, **kwargs_)
+            return layerTopDepth(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6653,38 +6146,38 @@ class layerTopDepthType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerTopDepthType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerTopDepth',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerTopDepthType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerTopDepth')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'layerTopDepthType':
+        if self.original_tagname_ is not None and name_ == 'layerTopDepth':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerTopDepthType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerTopDepth')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerTopDepthType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerTopDepth',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerTopDepthType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerTopDepth'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='layerTopDepthType', fromsubclass_=False, pretty_print=True):
+                       name_='layerTopDepth', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6732,10 +6225,10 @@ class layerTopDepthType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class layerTopDepthType
+# end class layerTopDepth
 
 
-class layerBottomDepthType(GeneratedsSuper):
+class layerBottomDepth(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6754,13 +6247,13 @@ class layerBottomDepthType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, layerBottomDepthType)
+                CurrentSubclassModule_, layerBottomDepth)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if layerBottomDepthType.subclass:
-            return layerBottomDepthType.subclass(*args_, **kwargs_)
+        if layerBottomDepth.subclass:
+            return layerBottomDepth.subclass(*args_, **kwargs_)
         else:
-            return layerBottomDepthType(*args_, **kwargs_)
+            return layerBottomDepth(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6792,38 +6285,38 @@ class layerBottomDepthType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerBottomDepthType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='layerBottomDepth',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerBottomDepthType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('layerBottomDepth')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'layerBottomDepthType':
+        if self.original_tagname_ is not None and name_ == 'layerBottomDepth':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerBottomDepthType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='layerBottomDepth')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerBottomDepthType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='layerBottomDepth',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerBottomDepthType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='layerBottomDepth'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='layerBottomDepthType', fromsubclass_=False, pretty_print=True):
+                       name_='layerBottomDepth', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6871,10 +6364,10 @@ class layerBottomDepthType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class layerBottomDepthType
+# end class layerBottomDepth
 
 
-class velocityProfileQindex1Type(GeneratedsSuper):
+class velocityProfileQindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -6891,13 +6384,13 @@ class velocityProfileQindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityProfileQindex1Type)
+                CurrentSubclassModule_, velocityProfileQindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityProfileQindex1Type.subclass:
-            return velocityProfileQindex1Type.subclass(*args_, **kwargs_)
+        if velocityProfileQindex1.subclass:
+            return velocityProfileQindex1.subclass(*args_, **kwargs_)
         else:
-            return velocityProfileQindex1Type(*args_, **kwargs_)
+            return velocityProfileQindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -6923,25 +6416,25 @@ class velocityProfileQindex1Type(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='velocityProfileQindex1Type', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileQindex1Type')
+               name_='velocityProfileQindex1', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileQindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityProfileQindex1Type':
+        if self.original_tagname_ is not None and name_ == 'velocityProfileQindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileQindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileQindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileQindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='velocityProfileQindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -6949,12 +6442,12 @@ class velocityProfileQindex1Type(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='velocityProfileQindex1Type'):
+                         name_='velocityProfileQindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityProfileQindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='velocityProfileQindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6989,10 +6482,10 @@ class velocityProfileQindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class velocityProfileQindex1Type
+# end class velocityProfileQindex1
 
 
-class velocityProfileReferenceType(GeneratedsSuper):
+class velocityProfileReference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -7011,13 +6504,13 @@ class velocityProfileReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, velocityProfileReferenceType)
+                CurrentSubclassModule_, velocityProfileReference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if velocityProfileReferenceType.subclass:
-            return velocityProfileReferenceType.subclass(*args_, **kwargs_)
+        if velocityProfileReference.subclass:
+            return velocityProfileReference.subclass(*args_, **kwargs_)
         else:
-            return velocityProfileReferenceType(*args_, **kwargs_)
+            return velocityProfileReference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -7050,38 +6543,38 @@ class velocityProfileReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='velocityProfileReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileReferenceType')
+               name_='velocityProfileReference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('velocityProfileReference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'velocityProfileReferenceType':
+        if self.original_tagname_ is not None and name_ == 'velocityProfileReference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='velocityProfileReference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
             self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_,
-                                name_='velocityProfileReferenceType', pretty_print=pretty_print)
+                                name_='velocityProfileReference', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='velocityProfileReferenceType'):
+                         name_='velocityProfileReference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='velocityProfileReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='velocityProfileReference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7114,532 +6607,21 @@ class velocityProfileReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType4.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType6.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class velocityProfileReferenceType
+# end class velocityProfileReference
 
 
-class literatureSourceType4(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType4)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType4.subclass:
-            return literatureSourceType4.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType4(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType4',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType4')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType4':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType4')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType4',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType4'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType4', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType5.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType4
-
-
-class languageType5(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType5)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType5.subclass:
-            return languageType5.subclass(*args_, **kwargs_)
-        else:
-            return languageType5(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType5',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType5')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType5':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType5')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType5',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType5'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType5',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType5
-
-
-class FileResourceType6(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        if url is None:
-            self.url = []
-        else:
-            self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType6)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType6.subclass:
-            return FileResourceType6.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType6(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def add_url(self, value):
-        self.url.append(value)
-
-    def insert_url_at(self, index, value):
-        self.url.insert(index, value)
-
-    def replace_url_at(self, index, value):
-        self.url[index] = value
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType6',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType6')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType6':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType6')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType6',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType6'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType6', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        for url_ in self.url:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(url_), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url.append(value_)
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType6
-
-
-class siteDescriptionType(GeneratedsSuper):
+class siteDescription(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -7672,13 +6654,13 @@ class siteDescriptionType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteDescriptionType)
+                CurrentSubclassModule_, siteDescription)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteDescriptionType.subclass:
-            return siteDescriptionType.subclass(*args_, **kwargs_)
+        if siteDescription.subclass:
+            return siteDescription.subclass(*args_, **kwargs_)
         else:
-            return siteDescriptionType(*args_, **kwargs_)
+            return siteDescription(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -7752,38 +6734,38 @@ class siteDescriptionType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteDescriptionType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteDescription',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteDescriptionType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteDescription')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteDescriptionType':
+        if self.original_tagname_ is not None and name_ == 'siteDescription':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteDescriptionType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteDescription')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteDescriptionType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteDescription',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteDescriptionType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteDescription'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteDescriptionType', fromsubclass_=False, pretty_print=True):
+                       name_='siteDescription', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7843,51 +6825,51 @@ class siteDescriptionType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'latitude':
-            obj_ = latitudeType.factory(parent_object_=self)
+            obj_ = latitude.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.latitude = obj_
             obj_.original_tagname_ = 'latitude'
         elif nodeName_ == 'longitude':
-            obj_ = longitudeType.factory(parent_object_=self)
+            obj_ = longitude.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.longitude = obj_
             obj_.original_tagname_ = 'longitude'
         elif nodeName_ == 'altitude':
-            obj_ = altitudeType.factory(parent_object_=self)
+            obj_ = altitude.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.altitude = obj_
             obj_.original_tagname_ = 'altitude'
         elif nodeName_ == 'minDistanceFromStation':
-            obj_ = minDistanceFromStationType.factory(parent_object_=self)
+            obj_ = minDistanceFromStation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.minDistanceFromStation = obj_
             obj_.original_tagname_ = 'minDistanceFromStation'
         elif nodeName_ == 'maxDistanceFromStation':
-            obj_ = maxDistanceFromStationType.factory(parent_object_=self)
+            obj_ = maxDistanceFromStation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.maxDistanceFromStation = obj_
             obj_.original_tagname_ = 'maxDistanceFromStation'
         elif nodeName_ == 'siteMorphology':
-            obj_ = siteMorphologyType.factory(parent_object_=self)
+            obj_ = siteMorphology.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteMorphology = obj_
             obj_.original_tagname_ = 'siteMorphology'
         elif nodeName_ == 'siteTopology':
-            obj_ = siteTopologyType.factory(parent_object_=self)
+            obj_ = siteTopology.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteTopology = obj_
             obj_.original_tagname_ = 'siteTopology'
         elif nodeName_ == 'OverallQindex':
-            obj_ = OverallQindexType.factory(parent_object_=self)
+            obj_ = OverallQindex.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.OverallQindex = obj_
             obj_.original_tagname_ = 'OverallQindex'
 
 
-# end class siteDescriptionType
+# end class siteDescription
 
 
-class latitudeType(GeneratedsSuper):
+class latitude(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -7904,13 +6886,13 @@ class latitudeType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, latitudeType)
+                CurrentSubclassModule_, latitude)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if latitudeType.subclass:
-            return latitudeType.subclass(*args_, **kwargs_)
+        if latitude.subclass:
+            return latitude.subclass(*args_, **kwargs_)
         else:
-            return latitudeType(*args_, **kwargs_)
+            return latitude(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -7935,37 +6917,37 @@ class latitudeType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='latitudeType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='latitude',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('latitudeType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('latitude')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'latitudeType':
+        if self.original_tagname_ is not None and name_ == 'latitude':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='latitudeType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='latitude')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='latitudeType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='latitude',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='latitudeType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='latitude'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='latitudeType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='latitude',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8001,10 +6983,10 @@ class latitudeType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class latitudeType
+# end class latitude
 
 
-class longitudeType(GeneratedsSuper):
+class longitude(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8021,13 +7003,13 @@ class longitudeType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, longitudeType)
+                CurrentSubclassModule_, longitude)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if longitudeType.subclass:
-            return longitudeType.subclass(*args_, **kwargs_)
+        if longitude.subclass:
+            return longitude.subclass(*args_, **kwargs_)
         else:
-            return longitudeType(*args_, **kwargs_)
+            return longitude(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8052,37 +7034,37 @@ class longitudeType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='longitudeType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='longitude',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('longitudeType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('longitude')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'longitudeType':
+        if self.original_tagname_ is not None and name_ == 'longitude':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='longitudeType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='longitude')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='longitudeType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='longitude',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='longitudeType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='longitude'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='longitudeType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='longitude',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8118,10 +7100,10 @@ class longitudeType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class longitudeType
+# end class longitude
 
 
-class altitudeType(GeneratedsSuper):
+class altitude(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8138,13 +7120,13 @@ class altitudeType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, altitudeType)
+                CurrentSubclassModule_, altitude)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if altitudeType.subclass:
-            return altitudeType.subclass(*args_, **kwargs_)
+        if altitude.subclass:
+            return altitude.subclass(*args_, **kwargs_)
         else:
-            return altitudeType(*args_, **kwargs_)
+            return altitude(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8169,37 +7151,37 @@ class altitudeType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='altitudeType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='altitude',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('altitudeType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('altitude')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'altitudeType':
+        if self.original_tagname_ is not None and name_ == 'altitude':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='altitudeType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='altitude')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='altitudeType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='altitude',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='altitudeType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='altitude'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='altitudeType',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='altitude',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8235,10 +7217,10 @@ class altitudeType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class altitudeType
+# end class altitude
 
 
-class minDistanceFromStationType(GeneratedsSuper):
+class minDistanceFromStation(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8255,13 +7237,13 @@ class minDistanceFromStationType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, minDistanceFromStationType)
+                CurrentSubclassModule_, minDistanceFromStation)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if minDistanceFromStationType.subclass:
-            return minDistanceFromStationType.subclass(*args_, **kwargs_)
+        if minDistanceFromStation.subclass:
+            return minDistanceFromStation.subclass(*args_, **kwargs_)
         else:
-            return minDistanceFromStationType(*args_, **kwargs_)
+            return minDistanceFromStation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8287,25 +7269,25 @@ class minDistanceFromStationType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='minDistanceFromStationType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('minDistanceFromStationType')
+               name_='minDistanceFromStation', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('minDistanceFromStation')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'minDistanceFromStationType':
+        if self.original_tagname_ is not None and name_ == 'minDistanceFromStation':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='minDistanceFromStationType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='minDistanceFromStation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='minDistanceFromStationType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='minDistanceFromStation',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -8313,12 +7295,12 @@ class minDistanceFromStationType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='minDistanceFromStationType'):
+                         name_='minDistanceFromStation'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='minDistanceFromStationType', fromsubclass_=False, pretty_print=True):
+                       name_='minDistanceFromStation', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -8353,10 +7335,10 @@ class minDistanceFromStationType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class minDistanceFromStationType
+# end class minDistanceFromStation
 
 
-class maxDistanceFromStationType(GeneratedsSuper):
+class maxDistanceFromStation(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8373,13 +7355,13 @@ class maxDistanceFromStationType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, maxDistanceFromStationType)
+                CurrentSubclassModule_, maxDistanceFromStation)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if maxDistanceFromStationType.subclass:
-            return maxDistanceFromStationType.subclass(*args_, **kwargs_)
+        if maxDistanceFromStation.subclass:
+            return maxDistanceFromStation.subclass(*args_, **kwargs_)
         else:
-            return maxDistanceFromStationType(*args_, **kwargs_)
+            return maxDistanceFromStation(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8405,25 +7387,25 @@ class maxDistanceFromStationType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='maxDistanceFromStationType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('maxDistanceFromStationType')
+               name_='maxDistanceFromStation', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('maxDistanceFromStation')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'maxDistanceFromStationType':
+        if self.original_tagname_ is not None and name_ == 'maxDistanceFromStation':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='maxDistanceFromStationType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='maxDistanceFromStation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='maxDistanceFromStationType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='maxDistanceFromStation',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -8431,12 +7413,12 @@ class maxDistanceFromStationType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='maxDistanceFromStationType'):
+                         name_='maxDistanceFromStation'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='maxDistanceFromStationType', fromsubclass_=False, pretty_print=True):
+                       name_='maxDistanceFromStation', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -8471,10 +7453,10 @@ class maxDistanceFromStationType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class maxDistanceFromStationType
+# end class maxDistanceFromStation
 
 
-class siteMorphologyType(GeneratedsSuper):
+class siteMorphology(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8508,7 +7490,7 @@ class siteMorphologyType(GeneratedsSuper):
         self.h800Reference_nsprefix_ = None
         self.geologicalUnit = geologicalUnit
         if self.geologicalUnit is not None:
-            self.validate_geologicalUnitType(self.geologicalUnit)
+            self.validate_geologicalUnit(self.geologicalUnit)
         self.geologicalUnit_nsprefix_ = None
         self.geologicalUnitQindex1 = geologicalUnitQindex1
         self.geologicalUnitQindex1_nsprefix_ = None
@@ -8524,13 +7506,13 @@ class siteMorphologyType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteMorphologyType)
+                CurrentSubclassModule_, siteMorphology)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteMorphologyType.subclass:
-            return siteMorphologyType.subclass(*args_, **kwargs_)
+        if siteMorphology.subclass:
+            return siteMorphology.subclass(*args_, **kwargs_)
         else:
-            return siteMorphologyType(*args_, **kwargs_)
+            return siteMorphology(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8630,7 +7612,7 @@ class siteMorphologyType(GeneratedsSuper):
     def set_morphology(self, morphology):
         self.morphology = morphology
 
-    def validate_geologicalUnitType(self, value):
+    def validate_geologicalUnit(self, value):
         result = True
         # Validate type geologicalUnitType, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -8671,38 +7653,38 @@ class siteMorphologyType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteMorphologyType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteMorphology',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteMorphologyType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteMorphology')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteMorphologyType':
+        if self.original_tagname_ is not None and name_ == 'siteMorphology':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteMorphologyType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteMorphology')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteMorphologyType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteMorphology',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteMorphologyType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteMorphology'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteMorphologyType', fromsubclass_=False, pretty_print=True):
+                       name_='siteMorphology', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -8813,42 +7795,42 @@ class siteMorphologyType(GeneratedsSuper):
             self.siteClassEC8 = value_
             self.siteClassEC8_nsprefix_ = child_.prefix
         elif nodeName_ == 'siteClassEC8Qindex1':
-            obj_ = siteClassEC8Qindex1Type.factory(parent_object_=self)
+            obj_ = siteClassEC8Qindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteClassEC8Qindex1 = obj_
             obj_.original_tagname_ = 'siteClassEC8Qindex1'
         elif nodeName_ == 'siteClassEC8Reference':
-            obj_ = siteClassEC8ReferenceType.factory(parent_object_=self)
+            obj_ = siteClassEC8Reference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.siteClassEC8Reference = obj_
             obj_.original_tagname_ = 'siteClassEC8Reference'
         elif nodeName_ == 'bedrockDepth':
-            obj_ = bedrockDepthType.factory(parent_object_=self)
+            obj_ = bedrockDepth.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.bedrockDepth = obj_
             obj_.original_tagname_ = 'bedrockDepth'
         elif nodeName_ == 'bedrockDepthQindex1':
-            obj_ = bedrockDepthQindex1Type.factory(parent_object_=self)
+            obj_ = bedrockDepthQindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.bedrockDepthQindex1 = obj_
             obj_.original_tagname_ = 'bedrockDepthQindex1'
         elif nodeName_ == 'bedrockDepthReference':
-            obj_ = bedrockDepthReferenceType.factory(parent_object_=self)
+            obj_ = bedrockDepthReference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.bedrockDepthReference = obj_
             obj_.original_tagname_ = 'bedrockDepthReference'
         elif nodeName_ == 'h800':
-            obj_ = h800Type.factory(parent_object_=self)
+            obj_ = h800.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.h800 = obj_
             obj_.original_tagname_ = 'h800'
         elif nodeName_ == 'h800Qindex1':
-            obj_ = h800Qindex1Type.factory(parent_object_=self)
+            obj_ = h800Qindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.h800Qindex1 = obj_
             obj_.original_tagname_ = 'h800Qindex1'
         elif nodeName_ == 'h800Reference':
-            obj_ = h800ReferenceType.factory(parent_object_=self)
+            obj_ = h800Reference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.h800Reference = obj_
             obj_.original_tagname_ = 'h800Reference'
@@ -8859,9 +7841,9 @@ class siteMorphologyType(GeneratedsSuper):
             self.geologicalUnit = value_
             self.geologicalUnit_nsprefix_ = child_.prefix
             # validate type geologicalUnitType
-            self.validate_geologicalUnitType(self.geologicalUnit)
+            self.validate_geologicalUnit(self.geologicalUnit)
         elif nodeName_ == 'geologicalUnitQindex1':
-            obj_ = geologicalUnitQindex1Type.factory(parent_object_=self)
+            obj_ = geologicalUnitQindex1.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.geologicalUnitQindex1 = obj_
             obj_.original_tagname_ = 'geologicalUnitQindex1'
@@ -8878,7 +7860,7 @@ class siteMorphologyType(GeneratedsSuper):
             self.geologicalUnitOGE = value_
             self.geologicalUnitOGE_nsprefix_ = child_.prefix
         elif nodeName_ == 'geologicalUnitReference':
-            obj_ = geologicalUnitReferenceType.factory(parent_object_=self)
+            obj_ = geologicalUnitReference.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.geologicalUnitReference = obj_
             obj_.original_tagname_ = 'geologicalUnitReference'
@@ -8890,10 +7872,10 @@ class siteMorphologyType(GeneratedsSuper):
             self.morphology_nsprefix_ = child_.prefix
 
 
-# end class siteMorphologyType
+# end class siteMorphology
 
 
-class siteClassEC8Qindex1Type(GeneratedsSuper):
+class siteClassEC8Qindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -8910,13 +7892,13 @@ class siteClassEC8Qindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteClassEC8Qindex1Type)
+                CurrentSubclassModule_, siteClassEC8Qindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteClassEC8Qindex1Type.subclass:
-            return siteClassEC8Qindex1Type.subclass(*args_, **kwargs_)
+        if siteClassEC8Qindex1.subclass:
+            return siteClassEC8Qindex1.subclass(*args_, **kwargs_)
         else:
-            return siteClassEC8Qindex1Type(*args_, **kwargs_)
+            return siteClassEC8Qindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -8941,38 +7923,38 @@ class siteClassEC8Qindex1Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteClassEC8Qindex1Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteClassEC8Qindex1',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteClassEC8Qindex1Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteClassEC8Qindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteClassEC8Qindex1Type':
+        if self.original_tagname_ is not None and name_ == 'siteClassEC8Qindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteClassEC8Qindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteClassEC8Qindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteClassEC8Qindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteClassEC8Qindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteClassEC8Qindex1Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteClassEC8Qindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteClassEC8Qindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='siteClassEC8Qindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -9007,10 +7989,10 @@ class siteClassEC8Qindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class siteClassEC8Qindex1Type
+# end class siteClassEC8Qindex1
 
 
-class siteClassEC8ReferenceType(GeneratedsSuper):
+class siteClassEC8Reference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -9029,13 +8011,13 @@ class siteClassEC8ReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteClassEC8ReferenceType)
+                CurrentSubclassModule_, siteClassEC8Reference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteClassEC8ReferenceType.subclass:
-            return siteClassEC8ReferenceType.subclass(*args_, **kwargs_)
+        if siteClassEC8Reference.subclass:
+            return siteClassEC8Reference.subclass(*args_, **kwargs_)
         else:
-            return siteClassEC8ReferenceType(*args_, **kwargs_)
+            return siteClassEC8Reference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -9068,25 +8050,25 @@ class siteClassEC8ReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='siteClassEC8ReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteClassEC8ReferenceType')
+               name_='siteClassEC8Reference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteClassEC8Reference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteClassEC8ReferenceType':
+        if self.original_tagname_ is not None and name_ == 'siteClassEC8Reference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteClassEC8ReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteClassEC8Reference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteClassEC8ReferenceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteClassEC8Reference',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -9094,12 +8076,12 @@ class siteClassEC8ReferenceType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='siteClassEC8ReferenceType'):
+                         name_='siteClassEC8Reference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteClassEC8ReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='siteClassEC8Reference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -9132,520 +8114,21 @@ class siteClassEC8ReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType7.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType9.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class siteClassEC8ReferenceType
+# end class siteClassEC8Reference
 
 
-class literatureSourceType7(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType7)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType7.subclass:
-            return literatureSourceType7.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType7(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType7',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType7')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType7':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType7')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType7',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType7'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType7', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType8.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType7
-
-
-class languageType8(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType8)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType8.subclass:
-            return languageType8.subclass(*args_, **kwargs_)
-        else:
-            return languageType8(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType8',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType8')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType8':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType8')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType8',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType8'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType8',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType8
-
-
-class FileResourceType9(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType9)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType9.subclass:
-            return FileResourceType9.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType9(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType9',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType9')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType9':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType9')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType9',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType9'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType9', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        if self.url is not None:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.url), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url = value_
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType9
-
-
-class bedrockDepthType(GeneratedsSuper):
+class bedrockDepth(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -9664,13 +8147,13 @@ class bedrockDepthType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, bedrockDepthType)
+                CurrentSubclassModule_, bedrockDepth)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if bedrockDepthType.subclass:
-            return bedrockDepthType.subclass(*args_, **kwargs_)
+        if bedrockDepth.subclass:
+            return bedrockDepth.subclass(*args_, **kwargs_)
         else:
-            return bedrockDepthType(*args_, **kwargs_)
+            return bedrockDepth(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -9702,38 +8185,38 @@ class bedrockDepthType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='bedrockDepthType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='bedrockDepth',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepthType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepth')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'bedrockDepthType':
+        if self.original_tagname_ is not None and name_ == 'bedrockDepth':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepthType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepth')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepthType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepth',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='bedrockDepthType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='bedrockDepth'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='bedrockDepthType', fromsubclass_=False, pretty_print=True):
+                       name_='bedrockDepth', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -9781,10 +8264,10 @@ class bedrockDepthType(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class bedrockDepthType
+# end class bedrockDepth
 
 
-class bedrockDepthQindex1Type(GeneratedsSuper):
+class bedrockDepthQindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -9801,13 +8284,13 @@ class bedrockDepthQindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, bedrockDepthQindex1Type)
+                CurrentSubclassModule_, bedrockDepthQindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if bedrockDepthQindex1Type.subclass:
-            return bedrockDepthQindex1Type.subclass(*args_, **kwargs_)
+        if bedrockDepthQindex1.subclass:
+            return bedrockDepthQindex1.subclass(*args_, **kwargs_)
         else:
-            return bedrockDepthQindex1Type(*args_, **kwargs_)
+            return bedrockDepthQindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -9832,38 +8315,38 @@ class bedrockDepthQindex1Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='bedrockDepthQindex1Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='bedrockDepthQindex1',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepthQindex1Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepthQindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'bedrockDepthQindex1Type':
+        if self.original_tagname_ is not None and name_ == 'bedrockDepthQindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepthQindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepthQindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepthQindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepthQindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='bedrockDepthQindex1Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='bedrockDepthQindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='bedrockDepthQindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='bedrockDepthQindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -9898,10 +8381,10 @@ class bedrockDepthQindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class bedrockDepthQindex1Type
+# end class bedrockDepthQindex1
 
 
-class bedrockDepthReferenceType(GeneratedsSuper):
+class bedrockDepthReference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -9920,13 +8403,13 @@ class bedrockDepthReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, bedrockDepthReferenceType)
+                CurrentSubclassModule_, bedrockDepthReference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if bedrockDepthReferenceType.subclass:
-            return bedrockDepthReferenceType.subclass(*args_, **kwargs_)
+        if bedrockDepthReference.subclass:
+            return bedrockDepthReference.subclass(*args_, **kwargs_)
         else:
-            return bedrockDepthReferenceType(*args_, **kwargs_)
+            return bedrockDepthReference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -9959,25 +8442,25 @@ class bedrockDepthReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='bedrockDepthReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepthReferenceType')
+               name_='bedrockDepthReference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('bedrockDepthReference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'bedrockDepthReferenceType':
+        if self.original_tagname_ is not None and name_ == 'bedrockDepthReference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepthReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='bedrockDepthReference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepthReferenceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='bedrockDepthReference',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -9985,12 +8468,12 @@ class bedrockDepthReferenceType(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='bedrockDepthReferenceType'):
+                         name_='bedrockDepthReference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='bedrockDepthReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='bedrockDepthReference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -10023,520 +8506,21 @@ class bedrockDepthReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType10.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType12.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class bedrockDepthReferenceType
+# end class bedrockDepthReference
 
 
-class literatureSourceType10(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType10)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType10.subclass:
-            return literatureSourceType10.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType10(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType10',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType10')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType10':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType10')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType10',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType10'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType10', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType11.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType10
-
-
-class languageType11(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType11)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType11.subclass:
-            return languageType11.subclass(*args_, **kwargs_)
-        else:
-            return languageType11(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType11',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType11')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType11':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType11')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType11',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType11'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType11',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType11
-
-
-class FileResourceType12(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType12)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType12.subclass:
-            return FileResourceType12.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType12(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType12',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType12')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType12':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType12')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType12',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType12'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType12', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        if self.url is not None:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.url), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url = value_
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType12
-
-
-class h800Type(GeneratedsSuper):
+class h800(GeneratedsSuper):
     """This is not included in the 2.0 draft"""
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
@@ -10556,13 +8540,13 @@ class h800Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, h800Type)
+                CurrentSubclassModule_, h800)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if h800Type.subclass:
-            return h800Type.subclass(*args_, **kwargs_)
+        if h800.subclass:
+            return h800.subclass(*args_, **kwargs_)
         else:
-            return h800Type(*args_, **kwargs_)
+            return h800(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -10594,37 +8578,37 @@ class h800Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'h800Type':
+        if self.original_tagname_ is not None and name_ == 'h800':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Type',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -10673,10 +8657,10 @@ class h800Type(GeneratedsSuper):
             self.uncertainty_nsprefix_ = child_.prefix
 
 
-# end class h800Type
+# end class h800
 
 
-class h800Qindex1Type(GeneratedsSuper):
+class h800Qindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -10693,13 +8677,13 @@ class h800Qindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, h800Qindex1Type)
+                CurrentSubclassModule_, h800Qindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if h800Qindex1Type.subclass:
-            return h800Qindex1Type.subclass(*args_, **kwargs_)
+        if h800Qindex1.subclass:
+            return h800Qindex1.subclass(*args_, **kwargs_)
         else:
-            return h800Qindex1Type(*args_, **kwargs_)
+            return h800Qindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -10724,37 +8708,37 @@ class h800Qindex1Type(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Qindex1Type',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Qindex1',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800Qindex1Type')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800Qindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'h800Qindex1Type':
+        if self.original_tagname_ is not None and name_ == 'h800Qindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800Qindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800Qindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800Qindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800Qindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800Qindex1Type'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800Qindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Qindex1Type',
+                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Qindex1',
                        fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -10790,10 +8774,10 @@ class h800Qindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class h800Qindex1Type
+# end class h800Qindex1
 
 
-class h800ReferenceType(GeneratedsSuper):
+class h800Reference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -10812,13 +8796,13 @@ class h800ReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, h800ReferenceType)
+                CurrentSubclassModule_, h800Reference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if h800ReferenceType.subclass:
-            return h800ReferenceType.subclass(*args_, **kwargs_)
+        if h800Reference.subclass:
+            return h800Reference.subclass(*args_, **kwargs_)
         else:
-            return h800ReferenceType(*args_, **kwargs_)
+            return h800Reference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -10850,38 +8834,38 @@ class h800ReferenceType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800ReferenceType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='h800Reference',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800ReferenceType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('h800Reference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'h800ReferenceType':
+        if self.original_tagname_ is not None and name_ == 'h800Reference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800ReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='h800Reference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800ReferenceType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='h800Reference',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800ReferenceType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='h800Reference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='h800ReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='h800Reference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -10914,532 +8898,21 @@ class h800ReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType13.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType15.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class h800ReferenceType
+# end class h800Reference
 
 
-class literatureSourceType13(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType13)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType13.subclass:
-            return literatureSourceType13.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType13(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType13',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType13')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType13':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType13')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType13',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType13'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType13', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType14.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType13
-
-
-class languageType14(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType14)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType14.subclass:
-            return languageType14.subclass(*args_, **kwargs_)
-        else:
-            return languageType14(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType14',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType14')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType14':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType14')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType14',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType14'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType14',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType14
-
-
-class FileResourceType15(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        if url is None:
-            self.url = []
-        else:
-            self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType15)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType15.subclass:
-            return FileResourceType15.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType15(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def add_url(self, value):
-        self.url.append(value)
-
-    def insert_url_at(self, index, value):
-        self.url.insert(index, value)
-
-    def replace_url_at(self, index, value):
-        self.url[index] = value
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType15',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType15')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType15':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType15')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType15',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType15'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType15', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        for url_ in self.url:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(url_), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url.append(value_)
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType15
-
-
-class geologicalUnitQindex1Type(GeneratedsSuper):
+class geologicalUnitQindex1(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -11456,13 +8929,13 @@ class geologicalUnitQindex1Type(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, geologicalUnitQindex1Type)
+                CurrentSubclassModule_, geologicalUnitQindex1)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if geologicalUnitQindex1Type.subclass:
-            return geologicalUnitQindex1Type.subclass(*args_, **kwargs_)
+        if geologicalUnitQindex1.subclass:
+            return geologicalUnitQindex1.subclass(*args_, **kwargs_)
         else:
-            return geologicalUnitQindex1Type(*args_, **kwargs_)
+            return geologicalUnitQindex1(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -11488,25 +8961,25 @@ class geologicalUnitQindex1Type(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='geologicalUnitQindex1Type', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('geologicalUnitQindex1Type')
+               name_='geologicalUnitQindex1', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('geologicalUnitQindex1')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'geologicalUnitQindex1Type':
+        if self.original_tagname_ is not None and name_ == 'geologicalUnitQindex1':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='geologicalUnitQindex1Type')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='geologicalUnitQindex1')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='geologicalUnitQindex1Type',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='geologicalUnitQindex1',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
@@ -11514,12 +8987,12 @@ class geologicalUnitQindex1Type(GeneratedsSuper):
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='geologicalUnitQindex1Type'):
+                         name_='geologicalUnitQindex1'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='geologicalUnitQindex1Type', fromsubclass_=False, pretty_print=True):
+                       name_='geologicalUnitQindex1', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -11554,10 +9027,10 @@ class geologicalUnitQindex1Type(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class geologicalUnitQindex1Type
+# end class geologicalUnitQindex1
 
 
-class geologicalUnitReferenceType(GeneratedsSuper):
+class geologicalUnitReference(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -11576,13 +9049,13 @@ class geologicalUnitReferenceType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, geologicalUnitReferenceType)
+                CurrentSubclassModule_, geologicalUnitReference)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if geologicalUnitReferenceType.subclass:
-            return geologicalUnitReferenceType.subclass(*args_, **kwargs_)
+        if geologicalUnitReference.subclass:
+            return geologicalUnitReference.subclass(*args_, **kwargs_)
         else:
-            return geologicalUnitReferenceType(*args_, **kwargs_)
+            return geologicalUnitReference(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -11615,38 +9088,38 @@ class geologicalUnitReferenceType(GeneratedsSuper):
 
     def export(self, outfile, level, namespaceprefix_='',
                namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-               name_='geologicalUnitReferenceType', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('geologicalUnitReferenceType')
+               name_='geologicalUnitReference', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('geologicalUnitReference')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'geologicalUnitReferenceType':
+        if self.original_tagname_ is not None and name_ == 'geologicalUnitReference':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='geologicalUnitReferenceType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='geologicalUnitReference')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
             self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_,
-                                name_='geologicalUnitReferenceType', pretty_print=pretty_print)
+                                name_='geologicalUnitReference', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='',
-                         name_='geologicalUnitReferenceType'):
+                         name_='geologicalUnitReference'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='geologicalUnitReferenceType', fromsubclass_=False, pretty_print=True):
+                       name_='geologicalUnitReference', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -11679,532 +9152,21 @@ class geologicalUnitReferenceType(GeneratedsSuper):
 
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'literatureSource':
-            obj_ = literatureSourceType16.factory(parent_object_=self)
+            obj_ = literatureSource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.literatureSource = obj_
             obj_.original_tagname_ = 'literatureSource'
         elif nodeName_ == 'FileResource':
-            obj_ = FileResourceType18.factory(parent_object_=self)
+            obj_ = FileResource.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
             self.FileResource = obj_
             obj_.original_tagname_ = 'FileResource'
 
 
-# end class geologicalUnitReferenceType
+# end class geologicalUnitReference
 
 
-class literatureSourceType16(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, title=None, firstAuthor=None, secondaryAuthors=None, year=None, booktitle=None, language=None,
-                 DOI=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.title = title
-        self.title_nsprefix_ = None
-        self.firstAuthor = firstAuthor
-        self.firstAuthor_nsprefix_ = None
-        self.secondaryAuthors = secondaryAuthors
-        self.secondaryAuthors_nsprefix_ = None
-        self.year = year
-        self.year_nsprefix_ = None
-        self.booktitle = booktitle
-        self.booktitle_nsprefix_ = None
-        self.language = language
-        self.language_nsprefix_ = None
-        self.DOI = DOI
-        self.DOI_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, literatureSourceType16)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if literatureSourceType16.subclass:
-            return literatureSourceType16.subclass(*args_, **kwargs_)
-        else:
-            return literatureSourceType16(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, title):
-        self.title = title
-
-    def get_firstAuthor(self):
-        return self.firstAuthor
-
-    def set_firstAuthor(self, firstAuthor):
-        self.firstAuthor = firstAuthor
-
-    def get_secondaryAuthors(self):
-        return self.secondaryAuthors
-
-    def set_secondaryAuthors(self, secondaryAuthors):
-        self.secondaryAuthors = secondaryAuthors
-
-    def get_year(self):
-        return self.year
-
-    def set_year(self, year):
-        self.year = year
-
-    def get_booktitle(self):
-        return self.booktitle
-
-    def set_booktitle(self, booktitle):
-        self.booktitle = booktitle
-
-    def get_language(self):
-        return self.language
-
-    def set_language(self, language):
-        self.language = language
-
-    def get_DOI(self):
-        return self.DOI
-
-    def set_DOI(self, DOI):
-        self.DOI = DOI
-
-    def hasContent_(self):
-        if (
-                self.title is not None or
-                self.firstAuthor is not None or
-                self.secondaryAuthors is not None or
-                self.year is not None or
-                self.booktitle is not None or
-                self.language is not None or
-                self.DOI is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='literatureSourceType16',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('literatureSourceType16')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'literatureSourceType16':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='literatureSourceType16')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='literatureSourceType16',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='literatureSourceType16'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='literatureSourceType16', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.title is not None:
-            namespaceprefix_ = self.title_nsprefix_ + ':' if (UseCapturedNS_ and self.title_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%stitle>%s</%stitle>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.title), input_name='title')),
-                namespaceprefix_, eol_))
-        if self.firstAuthor is not None:
-            namespaceprefix_ = self.firstAuthor_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.firstAuthor_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sfirstAuthor>%s</%sfirstAuthor>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.firstAuthor), input_name='firstAuthor')), namespaceprefix_, eol_))
-        if self.secondaryAuthors is not None:
-            namespaceprefix_ = self.secondaryAuthors_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.secondaryAuthors_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%ssecondaryAuthors>%s</%ssecondaryAuthors>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.secondaryAuthors), input_name='secondaryAuthors')),
-                                                                             namespaceprefix_, eol_))
-        if self.year is not None:
-            namespaceprefix_ = self.year_nsprefix_ + ':' if (UseCapturedNS_ and self.year_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%syear>%s</%syear>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.year), input_name='year')),
-                namespaceprefix_, eol_))
-        if self.booktitle is not None:
-            namespaceprefix_ = self.booktitle_nsprefix_ + ':' if (UseCapturedNS_ and self.booktitle_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbooktitle>%s</%sbooktitle>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.booktitle), input_name='booktitle')), namespaceprefix_, eol_))
-        if self.language is not None:
-            namespaceprefix_ = self.language_nsprefix_ + ':' if (UseCapturedNS_ and self.language_nsprefix_) else ''
-            self.language.export(outfile, level, namespaceprefix_, namespacedef_='', name_='language',
-                                 pretty_print=pretty_print)
-        if self.DOI is not None:
-            namespaceprefix_ = self.DOI_nsprefix_ + ':' if (UseCapturedNS_ and self.DOI_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDOI>%s</%sDOI>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.DOI), input_name='DOI')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'title':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'title')
-            value_ = self.gds_validate_string(value_, node, 'title')
-            self.title = value_
-            self.title_nsprefix_ = child_.prefix
-        elif nodeName_ == 'firstAuthor':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'firstAuthor')
-            value_ = self.gds_validate_string(value_, node, 'firstAuthor')
-            self.firstAuthor = value_
-            self.firstAuthor_nsprefix_ = child_.prefix
-        elif nodeName_ == 'secondaryAuthors':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'secondaryAuthors')
-            value_ = self.gds_validate_string(value_, node, 'secondaryAuthors')
-            self.secondaryAuthors = value_
-            self.secondaryAuthors_nsprefix_ = child_.prefix
-        elif nodeName_ == 'year':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'year')
-            value_ = self.gds_validate_string(value_, node, 'year')
-            self.year = value_
-            self.year_nsprefix_ = child_.prefix
-        elif nodeName_ == 'booktitle':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'booktitle')
-            value_ = self.gds_validate_string(value_, node, 'booktitle')
-            self.booktitle = value_
-            self.booktitle_nsprefix_ = child_.prefix
-        elif nodeName_ == 'language':
-            obj_ = languageType17.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.language = obj_
-            obj_.original_tagname_ = 'language'
-        elif nodeName_ == 'DOI':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'DOI')
-            value_ = self.gds_validate_string(value_, node, 'DOI')
-            self.DOI = value_
-            self.DOI_nsprefix_ = child_.prefix
-
-
-# end class literatureSourceType16
-
-
-class languageType17(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, code=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.code = code
-        self.code_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, languageType17)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if languageType17.subclass:
-            return languageType17.subclass(*args_, **kwargs_)
-        else:
-            return languageType17(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_code(self):
-        return self.code
-
-    def set_code(self, code):
-        self.code = code
-
-    def hasContent_(self):
-        if (
-                self.code is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType17',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('languageType17')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'languageType17':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='languageType17')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='languageType17',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='languageType17'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='languageType17',
-                       fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.code is not None:
-            namespaceprefix_ = self.code_nsprefix_ + ':' if (UseCapturedNS_ and self.code_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%scode>%s</%scode>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(self.code), input_name='code')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'code':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'code')
-            value_ = self.gds_validate_string(value_, node, 'code')
-            self.code = value_
-            self.code_nsprefix_ = child_.prefix
-
-
-# end class languageType17
-
-
-class FileResourceType18(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    subclass = None
-    superclass = None
-
-    def __init__(self, description=None, url=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        self.description = description
-        self.description_nsprefix_ = None
-        if url is None:
-            self.url = []
-        else:
-            self.url = url
-        self.url_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FileResourceType18)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FileResourceType18.subclass:
-            return FileResourceType18.subclass(*args_, **kwargs_)
-        else:
-            return FileResourceType18(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-
-    def get_description(self):
-        return self.description
-
-    def set_description(self, description):
-        self.description = description
-
-    def get_url(self):
-        return self.url
-
-    def set_url(self, url):
-        self.url = url
-
-    def add_url(self, value):
-        self.url.append(value)
-
-    def insert_url_at(self, index, value):
-        self.url.insert(index, value)
-
-    def replace_url_at(self, index, value):
-        self.url[index] = value
-
-    def hasContent_(self):
-        if (
-                self.description is not None or
-                self.url
-        ):
-            return True
-        else:
-            return False
-
-    def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='FileResourceType18',
-               pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('FileResourceType18')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'FileResourceType18':
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ':'
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='FileResourceType18')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='FileResourceType18',
-                                pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_,))
-
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='FileResourceType18'):
-        pass
-
-    def exportChildren(self, outfile, level, namespaceprefix_='',
-                       namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='FileResourceType18', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.description is not None:
-            namespaceprefix_ = self.description_nsprefix_ + ':' if (
-                    UseCapturedNS_ and self.description_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%sdescription>%s</%sdescription>%s' % (namespaceprefix_, self.gds_encode(
-                self.gds_format_string(quote_xml(self.description), input_name='description')), namespaceprefix_, eol_))
-        for url_ in self.url:
-            namespaceprefix_ = self.url_nsprefix_ + ':' if (UseCapturedNS_ and self.url_nsprefix_) else ''
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<%surl>%s</%surl>%s' % (
-                namespaceprefix_, self.gds_encode(self.gds_format_string(quote_xml(url_), input_name='url')),
-                namespaceprefix_, eol_))
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
-        if nodeName_ == 'description':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'description')
-            value_ = self.gds_validate_string(value_, node, 'description')
-            self.description = value_
-            self.description_nsprefix_ = child_.prefix
-        elif nodeName_ == 'url':
-            value_ = child_.text
-            value_ = self.gds_parse_string(value_, node, 'url')
-            value_ = self.gds_validate_string(value_, node, 'url')
-            self.url.append(value_)
-            self.url_nsprefix_ = child_.prefix
-
-
-# end class FileResourceType18
-
-
-class siteTopologyType(GeneratedsSuper):
+class siteTopology(GeneratedsSuper):
     """or respective code, eg B2"""
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
@@ -12224,13 +9186,13 @@ class siteTopologyType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, siteTopologyType)
+                CurrentSubclassModule_, siteTopology)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if siteTopologyType.subclass:
-            return siteTopologyType.subclass(*args_, **kwargs_)
+        if siteTopology.subclass:
+            return siteTopology.subclass(*args_, **kwargs_)
         else:
-            return siteTopologyType(*args_, **kwargs_)
+            return siteTopology(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -12262,38 +9224,38 @@ class siteTopologyType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteTopologyType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='siteTopology',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteTopologyType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('siteTopology')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'siteTopologyType':
+        if self.original_tagname_ is not None and name_ == 'siteTopology':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteTopologyType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='siteTopology')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteTopologyType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='siteTopology',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteTopologyType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='siteTopology'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='siteTopologyType', fromsubclass_=False, pretty_print=True):
+                       name_='siteTopology', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -12343,10 +9305,10 @@ class siteTopologyType(GeneratedsSuper):
             self.schemeB_nsprefix_ = child_.prefix
 
 
-# end class siteTopologyType
+# end class siteTopology
 
 
-class OverallQindexType(GeneratedsSuper):
+class OverallQindex(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     subclass = None
     superclass = None
@@ -12363,13 +9325,13 @@ class OverallQindexType(GeneratedsSuper):
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, OverallQindexType)
+                CurrentSubclassModule_, OverallQindex)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if OverallQindexType.subclass:
-            return OverallQindexType.subclass(*args_, **kwargs_)
+        if OverallQindex.subclass:
+            return OverallQindex.subclass(*args_, **kwargs_)
         else:
-            return OverallQindexType(*args_, **kwargs_)
+            return OverallQindex(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -12394,38 +9356,38 @@ class OverallQindexType(GeneratedsSuper):
             return False
 
     def export(self, outfile, level, namespaceprefix_='',
-               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='OverallQindexType',
+               namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ', name_='OverallQindex',
                pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('OverallQindexType')
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('OverallQindex')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None and name_ == 'OverallQindexType':
+        if self.original_tagname_ is not None and name_ == 'OverallQindex':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '',))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='OverallQindexType')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='OverallQindex')
         if self.hasContent_():
             outfile.write('>%s' % (eol_,))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='OverallQindexType',
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='OverallQindex',
                                 pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_,))
 
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='OverallQindexType'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='OverallQindex'):
         pass
 
     def exportChildren(self, outfile, level, namespaceprefix_='',
                        namespacedef_=' xmlns:None="https://quake.ethz.ch/quakeml/QuakeML2.0" ',
-                       name_='OverallQindexType', fromsubclass_=False, pretty_print=True):
+                       name_='OverallQindex', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -12460,7 +9422,7 @@ class OverallQindexType(GeneratedsSuper):
             self.value_nsprefix_ = child_.prefix
 
 
-# end class OverallQindexType
+# end class OverallQindex
 
 
 GDSClassesMapping = {
@@ -12658,76 +9620,58 @@ RenameMappings_ = {
 NamespaceToDefMappings_ = {'F:\\FROM_LAPTOP_HP\\PROJECTS\\SERA\\SITE_XML QuakeML-SERA-1.2.xsd': []}
 
 __all__ = [
-    "AnalysisType",
-    "FileResourceType",
-    "FileResourceType12",
-    "FileResourceType15",
-    "FileResourceType18",
-    "FileResourceType3",
-    "FileResourceType6",
-    "FileResourceType9",
-    "OverallQindexType",
+    "Analysis",
+    "FileResource",
+    "OverallQindex",
     "SERA_quakeml",
-    "VelocityProfileType",
-    "affiliationType",
-    "altitudeType",
-    "bedrockDepthQindex1Type",
-    "bedrockDepthReferenceType",
-    "bedrockDepthType",
-    "boreholeLogsCountType",
-    "contactType",
-    "countryType",
-    "cptLogsCountType",
-    "densityType",
-    "geologicalUnitQindex1Type",
-    "geologicalUnitReferenceType",
-    "h800Qindex1Type",
-    "h800ReferenceType",
-    "h800Type",
-    "identifierType",
-    "institutionType",
-    "languageType",
-    "languageType11",
-    "languageType14",
-    "languageType17",
-    "languageType2",
-    "languageType5",
-    "languageType8",
-    "latitudeType",
-    "layerBottomDepthType",
-    "layerCountType",
-    "layerThicknessType",
-    "layerTopDepthType",
-    "literatureSourceType",
-    "literatureSourceType1",
-    "literatureSourceType10",
-    "literatureSourceType13",
-    "literatureSourceType16",
-    "literatureSourceType4",
-    "literatureSourceType7",
-    "longitudeType",
-    "maxDistanceFromStationType",
-    "minDistanceFromStationType",
-    "personType",
-    "postalAddressType",
-    "resonanceFrequencyQindex1Type",
-    "resonanceFrequencyReferenceType",
-    "resonanceFrequencyType",
-    "siteCharacterizationParametersType",
-    "siteClassEC8Qindex1Type",
-    "siteClassEC8ReferenceType",
-    "siteDescriptionType",
-    "siteMorphologyType",
-    "siteOwnerType",
-    "siteTopologyType",
-    "sptLogsCountType",
-    "velocityPType",
-    "velocityProfileCountType",
-    "velocityProfileDataType",
-    "velocityProfileQindex1Type",
-    "velocityProfileReferenceType",
-    "velocityS30Qindex1Type",
-    "velocityS30ReferenceType",
-    "velocityS30Type",
-    "velocitySType"
+    "VelocityProfile",
+    "affiliation",
+    "altitude",
+    "bedrockDepthQindex1",
+    "bedrockDepthReference",
+    "bedrockDepth",
+    "boreholeLogsCount",
+    "contact",
+    "country",
+    "cptLogsCount",
+    "density",
+    "geologicalUnitQindex1",
+    "geologicalUnitReference",
+    "h800Qindex1",
+    "h800Reference",
+    "h800",
+    "identifier",
+    "institution",
+    "language",
+    "latitude",
+    "layerBottomDepth",
+    "layerCount",
+    "layerThickness",
+    "layerTopDepth",
+    "literatureSource",
+    "longitude",
+    "maxDistanceFromStation",
+    "minDistanceFromStation",
+    "person",
+    "postalAddress",
+    "resonanceFrequencyQindex1",
+    "resonanceFrequencyReference",
+    "resonanceFrequency",
+    "siteCharacterizationParameters",
+    "siteClassEC8Qindex1",
+    "siteClassEC8Reference",
+    "siteDescription",
+    "siteMorphology",
+    "siteOwner",
+    "siteTopology",
+    "sptLogsCount",
+    "velocityP",
+    "velocityProfileCount",
+    "velocityProfileData",
+    "velocityProfileQindex1",
+    "velocityProfileReference",
+    "velocityS30Qindex1",
+    "velocityS30Reference",
+    "velocityS30",
+    "velocityS"
 ]
